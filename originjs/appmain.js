@@ -420,11 +420,13 @@ function main() {
     sounder.addFile("sound/replay.wav", "replay").addTag("se");
     sounder.addFile("sound/big1.mp3", "BIG1").addTag("bgm")
     sounder.addFile("sound/big2.mp3", "BIG2").addTag("bgm")
+    sounder.addFile("sound/big3.mp3", "BIG3").addTag("bgm")
+    sounder.addFile("sound/big4.mp3", "BIG4").addTag("bgm")
     sounder.addFile("sound/bigend.mp3", "bigend").addTag("se")
     sounder.addFile("sound/handtohand.mp3", "hand").addTag("voice").addTag("se");
     sounder.addFile("sound/wolf.mp3", "WOLF").addTag("se");
     sounder.addFile("sound/big1hit.wav", "big1hit").addTag("se");
-    sounder.addFile("sound/CT1.mp3", "ct1").addTag("bgm");
+    sounder.addFile("sound/keizoku.mp3", "keizoku").addTag("se");
     sounder.addFile("sound/BELL1.mp3", "BELL1").addTag("se");
     sounder.addFile("sound/BELL2.mp3", "BELL2").addTag("se");
     sounder.addFile("sound/reglot.mp3", "reglot").addTag("se");
@@ -716,6 +718,31 @@ function main() {
                 slotmodule.zyunjo = [3,2,1]
                 switch(bonusdata.by){
                     case 'long':
+                        console.log(bonusdata)
+                        if(bonusdata.jacgamecount == 1){
+                            if(bonusflag == 'jac1'){
+                                slotmodule.once('payend',()=>{
+                                    if(gamemode!='jac1'){
+                                        sounder.stopSound('bgm');
+                                        sounder.playSound('BIGEND1');
+                                        return;
+                                    }
+                                    sounder.stopSound('bgm')
+                                    sounder.playSound('keizoku',false,()=>{
+                                        sounder.playSound('BIG3',true)
+                                    })
+                                })
+                            }else{
+                                slotmodule.once('payend',()=>{
+                                    if(gamemode!='jac1'){
+                                        sounder.stopSound('bgm');
+                                        sounder.playSound('BIGEND1');
+                                        return;
+                                    }
+                                    sounder.playSound('BIGEND1')
+                                })
+                            }
+                        }
                         break
                     case 'short':
                         bonusdata.by = 'long'
@@ -823,6 +850,13 @@ function main() {
                                 }
                             },200)
                         })
+                    break
+                    case '鏡':
+                        if(gamemode == 'big'){
+
+                        }else{
+                            
+                        }
                 }
                 break
             case 'jac3':
