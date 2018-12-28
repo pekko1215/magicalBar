@@ -2,7 +2,13 @@ controlRerquest("data/control.smr", main)
 
 function main() {
     window.scrollTo(0, 0);
-
+    bonusdata = {
+        bonusget: 301,
+        geted: 0,
+        jacgamecount:1,
+        jacgetcount:1,
+        by:'short'
+    }
     var notplaypaysound = false;
 
     slotmodule.on("allreelstop", function(e) {
@@ -54,7 +60,7 @@ function main() {
                             setGamemode('jac1');
                             sounder.playSound('BIGSTART')
                             bonusdata = {
-                                bonusget: 465,
+                                bonusget: 301,
                                 geted: 0,
                                 jacgamecount:5,
                                 jacgetcount:5,
@@ -72,7 +78,7 @@ function main() {
                                 sounder.playSound("BIG2",true);
                             },1000)
                             bonusdata = {
-                                bonusget: 465,
+                                bonusget: 301,
                                 geted: 0,
                                 jacgamecount:1,
                                 jacgetcount:1,
@@ -93,6 +99,7 @@ function main() {
                             bonusdata.jacgetcount = 8;
                             bonusdata.jacgamecount = 12;
 
+                            sounder.playSound('BELL1');
                             setGamemode('jac2');
                             bonusflag = "none";
                             changeBonusSeg()
@@ -117,6 +124,8 @@ function main() {
                         case "リプレイ":
                             replayflag = true;
                             break;
+                        case '鏡15枚':
+                            sounder.playSound('BELL1');
                     }
                     break;
                 case 'jac1':
@@ -152,6 +161,7 @@ function main() {
                 slotmodule.emit("bonusend");
                 if(gamemode == 'jac1'){
                     sounder.stopSound('bgm')
+                    sounder.playSound('BIGEND1');
                 }
                 bonusflag = 'none'
                 setGamemode("normal")
@@ -722,7 +732,7 @@ function main() {
                         if(bonusdata.jacgamecount == 1){
                             if(bonusflag == 'jac1'){
                                 slotmodule.once('payend',()=>{
-                                    if(gamemode!='jac1'){
+                                    if(gamemode!='big'){
                                         sounder.stopSound('bgm');
                                         sounder.playSound('BIGEND1');
                                         return;
@@ -794,15 +804,16 @@ function main() {
                                 while(values[0]!=p);
                             }
                             var reachNum = ["010","101","232","323","454","545","676","767","898","989"]
-                            do{
+                            while(true){
                                 p = rand(10);
                                 var sum = values[0]+values[1]+p;
                                 var t = ''+values[0]+values[1]+p;
                                 var reachFlag = reachNum.find(d=>d==t);
-                                reachFlag = !((reachFlag && isReachNum && rand(3)) || (!reachFlag && !isReachNum));
-                                console.log({values,p,reachFlag})
+                                if(values[0] == values[1] && values[0] == p) continue;
+                                if((sum == 9||sum == 19||sum == 21)&&!isReachNum)continue;
+                                if(reachFlag && !isReachNum)continue;
+                                break;
                             }
-                            while(((sum==9||sum==19||sum==21)&&!isReachNum)||reachFlag||sum%111==0);
                             values.push(p);
                             if(gamemode == 'normal'){
                                 p = rand(10);

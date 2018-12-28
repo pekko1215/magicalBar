@@ -35,7 +35,7 @@ var YakuData = [{
     },
     {
         name: "ベル",
-        pay: [5, 5, 5]
+        pay: [8, 8, 8]
     },
     {
         name: "チェリー",
@@ -76,12 +76,12 @@ var YakuData = [{
     },
     {
         name: 'ベル',
-        pay: [5, 5, 5],
+        pay: [8, 8, 8],
         show:lines['右下がり']
     },
     {
         name: 'ベル',
-        pay: [5, 5, 5],
+        pay: [8, 8, 8],
         show:lines['上段']
     },
     {
