@@ -99,7 +99,7 @@ function main() {
                             bonusdata.jacgetcount = 8;
                             bonusdata.jacgamecount = 12;
 
-                            sounder.playSound('BELL1');
+                            sounder.playSound('BELL2');
                             setGamemode('jac2');
                             bonusflag = "none";
                             changeBonusSeg()
@@ -536,9 +536,6 @@ function main() {
     }
 
     window.SaveData = function() {
-        if (gamemode != "normal" || isCT) {
-            return false;
-        }
         var savedata = stringifySaveData()
         localStorage.setItem("savedata", JSON.stringify(savedata))
         return true;
